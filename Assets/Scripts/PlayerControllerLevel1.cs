@@ -19,7 +19,10 @@ public class PlayerControllerLevel1 : MonoBehaviour
     private static readonly int IsInJump = Animator.StringToHash("IsInJump");
     private float currentSpeed;
     private bool stillOnPlatform;
+    
     private int score;
+    private int crystalsNumber, maxCrystalsNumber;
+    private int lives;
 
     private Vector2 startPos;
     
@@ -27,10 +30,15 @@ public class PlayerControllerLevel1 : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         startPos = gameObject.transform.position;
+        score = 0;
+        crystalsNumber = 0;
+        maxCrystalsNumber = 3;
+        lives = 3;
     }
     
     void Update()
     {
+        Debug.Log(lives + " " + crystalsNumber);
         currentSpeed = 0;
         FlipSpriteOnMove();
         
@@ -91,13 +99,27 @@ public class PlayerControllerLevel1 : MonoBehaviour
 
         if (other.CompareTag("Portal"))
         {
-            Debug.Log("Portal trigger");
+            if(crystalsNumber >= maxCrystalsNumber)
+                Debug.Log("Level passed!");
+            else Debug.Log("You have not enough crystals to pass!");
         }
         
         if (other.CompareTag("Enemy"))
         {
             if(transform.position.y < other.transform.position.y + other.GetComponent<EnemyController>().jumpHeightToKill)
                 KillPlayer();
+        }
+
+        if (other.CompareTag("Crystal"))
+        {
+            crystalsNumber++;
+            other.gameObject.SetActive(false);
+        }
+
+        if (other.CompareTag("Live"))
+        {
+            lives++;
+            other.gameObject.SetActive(false);
         }
     }
     
@@ -118,6 +140,14 @@ public class PlayerControllerLevel1 : MonoBehaviour
 
     private void KillPlayer()
     {
-        gameObject.transform.position = startPos;
+        if(lives>0)
+        {
+            gameObject.transform.position = startPos;
+            lives--;
+        }
+        else
+        {
+
+        }
     }
 }

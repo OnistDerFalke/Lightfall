@@ -8,6 +8,8 @@ TagManager:
   - Battery
   - Portal
   - Enemy
+  - Crystal
+  - Live
   layers:
   - Default
   - TransparentFX

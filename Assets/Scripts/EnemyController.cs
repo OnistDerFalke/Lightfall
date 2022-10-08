@@ -55,7 +55,6 @@ public class EnemyController : MonoBehaviour
     {
         if(dir == 1) rend.flipX = true;
         else if(dir == -1) rend.flipX = false;
-        Debug.Log(rend.flipX);
     }
 
     private IEnumerator KillAfterDeath()
