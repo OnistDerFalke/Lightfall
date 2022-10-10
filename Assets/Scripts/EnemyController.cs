@@ -20,17 +20,14 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log("E: " + transform.position.y);
         HandleFlip();
         HandleMovement();
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    public void KillEnemy()
     {
-        if (other.CompareTag("Player"))
-        {
-            if(transform.position.y + jumpHeightToKill < other.transform.position.y)
-                StartCoroutine(KillAfterDeath());
-        }
+        StartCoroutine(KillAfterDeath());
     }
 
     private void HandleMovement()

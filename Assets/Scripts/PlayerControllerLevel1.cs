@@ -24,6 +24,8 @@ public class PlayerControllerLevel1 : MonoBehaviour
     private int crystalsNumber, maxCrystalsNumber;
     private int lives;
 
+    private bool isDead;
+
     private Vector2 startPos;
     
     void Awake()
@@ -34,10 +36,13 @@ public class PlayerControllerLevel1 : MonoBehaviour
         crystalsNumber = 0;
         maxCrystalsNumber = 3;
         lives = 3;
+        isDead = false;
     }
     
     void Update()
     {
+        if (isDead) return;
+        
         currentSpeed = 0;
         FlipSpriteOnMove();
         
@@ -109,8 +114,15 @@ public class PlayerControllerLevel1 : MonoBehaviour
         
         if (other.CompareTag("Enemy"))
         {
-            if(transform.position.y < other.transform.position.y + other.GetComponent<EnemyController>().jumpHeightToKill)
+            if (transform.position.y <=
+                other.transform.position.y + other.GetComponent<EnemyController>().jumpHeightToKill)
+            {
                 KillPlayer();
+            }
+            else
+            {
+                other.GetComponent<EnemyController>().KillEnemy();
+            }
         }
 
         if (other.CompareTag("Crystal"))
@@ -125,6 +137,11 @@ public class PlayerControllerLevel1 : MonoBehaviour
             lives++;
             other.gameObject.SetActive(false);
             Debug.Log($"You gained 1 more life. You have {lives} lives");
+        }
+
+        if (other.CompareTag("DeathZone"))
+        {
+            KillPlayer();
         }
     }
     
@@ -145,15 +162,18 @@ public class PlayerControllerLevel1 : MonoBehaviour
 
     private void KillPlayer()
     {
-        if(lives>0)
+        if(lives>1)
         {
             gameObject.transform.position = startPos;
+            rend.flipX = true;
             lives--;
             Debug.Log($"You have {lives} lives");
         }
         else
         {
-
+            isDead = true;
+            gameObject.transform.position = startPos;
+            Debug.Log("Game over.");
         }
     }
 }

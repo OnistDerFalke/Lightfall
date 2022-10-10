@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Crystal
   - Live
+  - DeathZone
   layers:
   - Default
   - TransparentFX
