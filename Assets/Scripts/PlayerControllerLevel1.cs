@@ -38,13 +38,15 @@ public class PlayerControllerLevel1 : MonoBehaviour
     
     void Update()
     {
-        Debug.Log(lives + " " + crystalsNumber);
         currentSpeed = 0;
         FlipSpriteOnMove();
         
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) MoveRight();
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) MoveLeft();
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) Jump();
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+            MoveRight();
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+            MoveLeft();
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) 
+            Jump();
 
         animator.SetFloat(MovementSpeed, currentSpeed);
         animator.SetBool(IsInJump, !IsGrounded());
@@ -101,7 +103,8 @@ public class PlayerControllerLevel1 : MonoBehaviour
         {
             if(crystalsNumber >= maxCrystalsNumber)
                 Debug.Log("Level passed!");
-            else Debug.Log("You have not enough crystals to pass!");
+            else 
+                Debug.Log("You have not enough crystals to pass!");
         }
         
         if (other.CompareTag("Enemy"))
@@ -114,12 +117,14 @@ public class PlayerControllerLevel1 : MonoBehaviour
         {
             crystalsNumber++;
             other.gameObject.SetActive(false);
+            Debug.Log($"Crystals: {crystalsNumber}/{maxCrystalsNumber}");
         }
 
         if (other.CompareTag("Live"))
         {
             lives++;
             other.gameObject.SetActive(false);
+            Debug.Log($"You gained 1 more life. You have {lives} lives");
         }
     }
     
@@ -144,6 +149,7 @@ public class PlayerControllerLevel1 : MonoBehaviour
         {
             gameObject.transform.position = startPos;
             lives--;
+            Debug.Log($"You have {lives} lives");
         }
         else
         {

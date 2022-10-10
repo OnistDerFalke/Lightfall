@@ -53,8 +53,10 @@ public class EnemyController : MonoBehaviour
 
     private void HandleFlip()
     {
-        if(dir == 1) rend.flipX = true;
-        else if(dir == -1) rend.flipX = false;
+        if(dir == 1) 
+            rend.flipX = true;
+        else if(dir == -1) 
+            rend.flipX = false;
     }
 
     private IEnumerator KillAfterDeath()
@@ -62,5 +64,6 @@ public class EnemyController : MonoBehaviour
         animator.SetBool("isDead", true);
         yield return new WaitForSeconds(1f);
         gameObject.SetActive(false);
+        Debug.Log("Enemy is killed!");
     }
 }
