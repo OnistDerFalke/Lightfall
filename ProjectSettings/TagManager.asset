@@ -11,6 +11,10 @@ TagManager:
   - Crystal
   - Live
   - DeathZone
+  - Saw
+  - RedHue
+  - GreenHue
+  - BlueHue
   layers:
   - Default
   - TransparentFX

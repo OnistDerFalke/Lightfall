@@ -19,12 +19,6 @@ public class PlayerControllerLevel1 : MonoBehaviour
     private static readonly int IsInJump = Animator.StringToHash("IsInJump");
     private float currentSpeed;
     private bool stillOnPlatform;
-    
-    private int score;
-    private int crystalsNumber, maxCrystalsNumber;
-    private int lives;
-
-    private bool isDead;
 
     private Vector2 startPos;
     
@@ -32,29 +26,27 @@ public class PlayerControllerLevel1 : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         startPos = gameObject.transform.position;
-        score = 0;
-        crystalsNumber = 0;
-        maxCrystalsNumber = 3;
-        lives = 3;
-        isDead = false;
     }
     
     void Update()
     {
-        if (isDead) return;
-        
-        currentSpeed = 0;
-        FlipSpriteOnMove();
-        
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-            MoveRight();
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-            MoveLeft();
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) 
-            Jump();
+        if (GameManager.instance.currentGameState == GameState.GS_GAME)
+        {
+            if (GameManager.instance.IsPlayerDead()) return;
 
-        animator.SetFloat(MovementSpeed, currentSpeed);
-        animator.SetBool(IsInJump, !IsGrounded());
+            currentSpeed = 0;
+            FlipSpriteOnMove();
+
+            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+                MoveRight();
+            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+                MoveLeft();
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+                Jump();
+
+            animator.SetFloat(MovementSpeed, currentSpeed);
+            animator.SetBool(IsInJump, !IsGrounded());
+        }
     }
 
 
@@ -100,16 +92,14 @@ public class PlayerControllerLevel1 : MonoBehaviour
     {
         if (other.CompareTag("Battery"))
         {
-            score += 1;
+            GameManager.instance.AddBattery();
             other.gameObject.SetActive(false);
         }
 
         if (other.CompareTag("Portal"))
         {
-            if(crystalsNumber >= maxCrystalsNumber)
-                Debug.Log("Level passed!");
-            else 
-                Debug.Log("You have not enough crystals to pass!");
+            Debug.Log(GameManager.instance.AreAllHoesTaken() ? 
+                    "Level passed!" : "You need to collect all hues to pass.");
         }
         
         if (other.CompareTag("Enemy"))
@@ -121,22 +111,33 @@ public class PlayerControllerLevel1 : MonoBehaviour
             }
             else
             {
+                GameManager.instance.AddDefeatedEnemy();
                 other.GetComponent<EnemyController>().KillEnemy();
             }
         }
 
-        if (other.CompareTag("Crystal"))
+        if (other.CompareTag("BlueHue"))
         {
-            crystalsNumber++;
             other.gameObject.SetActive(false);
-            Debug.Log($"Crystals: {crystalsNumber}/{maxCrystalsNumber}");
+            GameManager.instance.AddHue(Hue.BLUE);
+        }
+        
+        if (other.CompareTag("RedHue"))
+        {
+            other.gameObject.SetActive(false);
+            GameManager.instance.AddHue(Hue.RED);
+        }
+        
+        if (other.CompareTag("GreenHue"))
+        {
+            other.gameObject.SetActive(false);
+            GameManager.instance.AddHue(Hue.GREEN);
         }
 
         if (other.CompareTag("Live"))
         {
-            lives++;
+            GameManager.instance.AddLive();
             other.gameObject.SetActive(false);
-            Debug.Log($"You gained 1 more life. You have {lives} lives");
         }
 
         if (other.CompareTag("DeathZone"))
@@ -162,16 +163,14 @@ public class PlayerControllerLevel1 : MonoBehaviour
 
     private void KillPlayer()
     {
-        if(lives>1)
+        if(GameManager.instance.GetLives() >= 0)
         {
             gameObject.transform.position = startPos;
             rend.flipX = true;
-            lives--;
-            Debug.Log($"You have {lives} lives");
+            GameManager.instance.RemoveLive();
         }
         else
         {
-            isDead = true;
             gameObject.transform.position = startPos;
             Debug.Log("Game over.");
         }
