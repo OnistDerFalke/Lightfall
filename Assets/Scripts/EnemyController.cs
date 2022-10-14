@@ -20,7 +20,6 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log("E: " + transform.position.y);
         HandleFlip();
         HandleMovement();
     }

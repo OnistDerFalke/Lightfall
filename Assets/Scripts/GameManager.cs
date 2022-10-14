@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,6 +32,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
     }
+
     void Start()
     {
         PauseMenu();
@@ -43,32 +41,39 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetKey(KeyCode.S)) InGame();
-        UpdateTimer();
+        if (Input.GetKey(KeyCode.S))
+        {
+            InGame();
+        }
+
+        if (currentGameState == GameState.GS_GAME)
+        {
+            UpdateTimer();
+        }
     }
 
-    void SetGameState(GameState newGameState)
+    public void SetGameState(GameState newGameState)
     {
         inGameCanvas.enabled = newGameState == GameState.GS_GAME;
         currentGameState = newGameState;
     }
 
-    void InGame()
+    public void InGame()
     {
         currentGameState = GameState.GS_GAME;
     }
     
-    void GameOver()
+    public void GameOver()
     {
         currentGameState = GameState.GS_GAME_OVER;
     }
-    
-    void PauseMenu()
+
+    public void PauseMenu()
     {
         currentGameState = GameState.GS_PAUSEMENU;
     }
-    
-    void LevelCompleted()
+
+    public void LevelCompleted()
     {
         currentGameState = GameState.GS_LEVELCOMPLETED;
     }
@@ -79,6 +84,7 @@ public class GameManager : MonoBehaviour
         Debug.Log(enemiesDefeated);
         enemiesDefeatedText.text = enemiesDefeated.ToString();
     }
+
     public void AddLive()
     {
         lives++;
@@ -89,7 +95,14 @@ public class GameManager : MonoBehaviour
     {
         lives--;
         UpdateLivesTab();
+
+        if (lives <= 0)
+        {
+            Debug.Log("Game over.");
+            GameOver();
+        }
     }
+
     public void AddBattery()
     {
         batteries++;
@@ -116,6 +129,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+
     public bool AreAllHoesTaken()
     {
         return hasBlueHue && hasGreenHue && hasRedHue;
@@ -134,10 +148,14 @@ public class GameManager : MonoBehaviour
     private void UpdateLivesTab()
     {
         foreach (var element in livesTab)
+        {
             element.enabled = false;
+        }
 
         for (var i = 0; i < lives; i++)
+        {
             livesTab[i].enabled = true;
+        }
     }
 
     private void UpdateTimer()

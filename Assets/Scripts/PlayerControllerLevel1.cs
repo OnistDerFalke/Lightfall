@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerControllerLevel1 : MonoBehaviour
@@ -32,7 +29,8 @@ public class PlayerControllerLevel1 : MonoBehaviour
     {
         if (GameManager.instance.currentGameState == GameState.GS_GAME)
         {
-            if (GameManager.instance.IsPlayerDead()) return;
+            if (GameManager.instance.IsPlayerDead())
+                return;
 
             currentSpeed = 0;
             FlipSpriteOnMove();
@@ -149,30 +147,31 @@ public class PlayerControllerLevel1 : MonoBehaviour
     private void FlipSpriteOnMove()
     {
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        {
             rend.flipX = true;
+        }
         else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        {
             rend.flipX = false;
+        }
     }
 
     private bool IsGrounded()
     {
         var hit = Physics2D.Raycast(transform.position, Vector2.down, 0.1f, groundLayer.value);
-        if (stillOnPlatform) return true;
+        if (stillOnPlatform) 
+            return true;
+
         return hit.collider != null;
     }
 
     private void KillPlayer()
     {
-        if(GameManager.instance.GetLives() >= 0)
+        if(GameManager.instance.GetLives() > 0)
         {
             gameObject.transform.position = startPos;
             rend.flipX = true;
             GameManager.instance.RemoveLive();
-        }
-        else
-        {
-            gameObject.transform.position = startPos;
-            Debug.Log("Game over.");
         }
     }
 }
