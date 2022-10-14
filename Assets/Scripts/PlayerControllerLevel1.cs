@@ -96,8 +96,15 @@ public class PlayerControllerLevel1 : MonoBehaviour
 
         if (other.CompareTag("Portal"))
         {
-            Debug.Log(GameManager.instance.AreAllHoesTaken() ? 
-                    "Level passed!" : "You need to collect all hues to pass.");
+            if (GameManager.instance.AreAllHoesTaken())
+            {
+                GameManager.instance.LevelCompleted();
+                Debug.Log("Level passed!");
+            }
+            else
+            {
+                Debug.Log("You need to collect all hues to pass.");
+            }
         }
         
         if (other.CompareTag("Enemy"))
