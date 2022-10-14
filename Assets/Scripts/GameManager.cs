@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) && currentGameState == GameState.GS_PAUSEMENU)
         {
             InGame();
         }
