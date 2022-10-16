@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public Text enemiesDefeatedText;
     public Image[] lightsTab;
     public Image[] livesTab;
+    public GameObject pauseMenu;
 
     private float timer = 0;
     private int lives = 3;
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour
     public void InGame()
     {
         currentGameState = GameState.GS_GAME;
+        pauseMenu.SetActive(false);
     }
     
     public void GameOver()
@@ -71,6 +73,7 @@ public class GameManager : MonoBehaviour
     public void PauseMenu()
     {
         currentGameState = GameState.GS_PAUSEMENU;
+        pauseMenu.SetActive(true);
     }
 
     public void LevelCompleted()
