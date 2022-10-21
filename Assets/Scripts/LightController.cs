@@ -3,11 +3,33 @@ using UnityEngine;
 public class LightController : MonoBehaviour
 {
     [SerializeField] private float lightSpeed;
-    
+    [SerializeField] private float batteryEnduranceTime;
+    [SerializeField] private UnityEngine.Rendering.Universal.Light2D flashlightLight;
+    [SerializeField] private UnityEngine.Rendering.Universal.Light2D spotPlayerLight;
+    [SerializeField] private UnityEngine.Rendering.Universal.Light2D globalLight;
+    [SerializeField] private ClassicProgressBar progressBar;
+
+    private float lastTimer = 0f;
+    private float currentTime;
+    private float flashlightLightStartIntensity, spotPlayerLightStartIntensity, globalLightStartIntensity;
+
     [SerializeField] private int lightLimesUp, lightLimesDown;
+
+    void Start()
+    {
+        progressBar.m_FillAmount = 1f;
+        flashlightLightStartIntensity = flashlightLight.intensity;
+        spotPlayerLightStartIntensity = spotPlayerLight.intensity;
+        globalLightStartIntensity = globalLight.intensity;
+    }
+
     void Update()
     {
-       SetLightRotation();
+       if (GameManager.instance.currentGameState == GameState.GS_GAME)
+       {
+            SetLightRotation();
+            HandleTimeFlow();
+       }
     }
 
     private void SetLightRotation()
@@ -48,5 +70,25 @@ public class LightController : MonoBehaviour
 
         rot.z %= 360;
         gameObject.transform.localEulerAngles = rot;
+    }
+
+    private void HandleTimeFlow()
+    {
+        currentTime = GameManager.instance.GetTimer();
+        var batteryPercent = 1f - ((currentTime - lastTimer)/batteryEnduranceTime);
+        if(batteryPercent <= 0) 
+        {
+            GameManager.instance.GameOver();
+            return;
+        }
+        progressBar.m_FillAmount = batteryPercent;
+        flashlightLight.intensity = batteryPercent * flashlightLightStartIntensity;
+        spotPlayerLight.intensity = batteryPercent * spotPlayerLightStartIntensity;
+        globalLight.intensity = batteryPercent * globalLightStartIntensity;
+    }
+
+    public void BatteryTakenEvent()
+    {
+        lastTimer = currentTime;
     }
 }

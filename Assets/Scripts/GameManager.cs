@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -22,6 +23,8 @@ public class GameManager : MonoBehaviour
     public Image[] lightsTab;
     public Image[] livesTab;
     public GameObject pauseMenu;
+    public GameObject endGameMenu;
+    public LightController lightController;
 
     private float timer = 0;
     private int lives = 3;
@@ -47,6 +50,11 @@ public class GameManager : MonoBehaviour
             InGame();
         }
 
+        if(Input.GetKey(KeyCode.S) && currentGameState == GameState.GS_GAME_OVER)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
         if (currentGameState == GameState.GS_GAME)
         {
             UpdateTimer();
@@ -63,11 +71,13 @@ public class GameManager : MonoBehaviour
     {
         currentGameState = GameState.GS_GAME;
         pauseMenu.SetActive(false);
+        endGameMenu.SetActive(false);
     }
     
     public void GameOver()
     {
         currentGameState = GameState.GS_GAME_OVER;
+        endGameMenu.SetActive(true);
     }
 
     public void PauseMenu()
@@ -84,7 +94,6 @@ public class GameManager : MonoBehaviour
     public void AddDefeatedEnemy()
     {
         enemiesDefeated++;
-        Debug.Log(enemiesDefeated);
         enemiesDefeatedText.text = enemiesDefeated.ToString();
     }
 
@@ -101,14 +110,19 @@ public class GameManager : MonoBehaviour
 
         if (lives <= 0)
         {
-            Debug.Log("Game over.");
             GameOver();
         }
+    }
+
+    public void ResetLightPower()
+    {
+        lightController.BatteryTakenEvent();
     }
 
     public void AddBattery()
     {
         batteries++;
+        ResetLightPower();
         var shownPrefix = "";
         if (batteries < 10) shownPrefix += "0";
         batteriesText.text = shownPrefix + batteries;
@@ -146,6 +160,11 @@ public class GameManager : MonoBehaviour
     public int GetLives()
     {
         return lives;
+    }
+
+    public float GetTimer()
+    {
+        return timer;
     }
 
     private void UpdateLivesTab()
