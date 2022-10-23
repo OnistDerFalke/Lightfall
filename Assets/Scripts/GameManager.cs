@@ -17,12 +17,12 @@ public class GameManager : MonoBehaviour
     
     public GameState currentGameState;
     public Canvas inGameCanvas;
+    public Canvas pauseMenuCanvas;
     public Text batteriesText;
     public Text timerText;
     public Text enemiesDefeatedText;
     public Image[] lightsTab;
     public Image[] livesTab;
-    public GameObject pauseMenu;
     public GameObject endGameMenu;
     public LightController lightController;
 
@@ -39,20 +39,26 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        PauseMenu();
+        InGame();
         UpdateLivesTab();
+
+        inGameCanvas.enabled = true;
+        pauseMenuCanvas.enabled = false;
     }
     
     void Update()
     {
-        if (Input.GetKey(KeyCode.S) && currentGameState == GameState.GS_PAUSEMENU)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            InGame();
+            if(currentGameState == GameState.GS_PAUSEMENU)
+                InGame();
+            else if(currentGameState == GameState.GS_GAME)
+                PauseMenu();
         }
 
         if(Input.GetKey(KeyCode.S) && currentGameState == GameState.GS_GAME_OVER)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            ReloadLevel();
         }
 
         if (currentGameState == GameState.GS_GAME)
@@ -63,6 +69,7 @@ public class GameManager : MonoBehaviour
 
     public void SetGameState(GameState newGameState)
     {
+        pauseMenuCanvas.enabled = currentGameState == GameState.GS_PAUSEMENU;
         inGameCanvas.enabled = newGameState == GameState.GS_GAME;
         currentGameState = newGameState;
     }
@@ -70,8 +77,9 @@ public class GameManager : MonoBehaviour
     public void InGame()
     {
         currentGameState = GameState.GS_GAME;
-        pauseMenu.SetActive(false);
         endGameMenu.SetActive(false);
+        pauseMenuCanvas.enabled = false;
+        inGameCanvas.enabled = true;
     }
     
     public void GameOver()
@@ -83,7 +91,18 @@ public class GameManager : MonoBehaviour
     public void PauseMenu()
     {
         currentGameState = GameState.GS_PAUSEMENU;
-        pauseMenu.SetActive(true);
+        pauseMenuCanvas.enabled = true;
+        inGameCanvas.enabled = false;
+    }
+
+    public void ReloadLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void BackToMenu()
+    {
+         SceneManager.LoadScene("Scenes/MainMenu");
     }
 
     public void LevelCompleted()
