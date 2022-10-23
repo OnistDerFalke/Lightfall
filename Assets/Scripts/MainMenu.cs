@@ -21,6 +21,11 @@ public class MainMenu : MonoBehaviour
     {
         StartCoroutine(StartGame("Scenes/Level1"));
     }
+    
+    public void OnLevel2ButtonPressed()
+        {
+            StartCoroutine(StartGame("Scenes/Level2"));
+        }
 
     public void OnExitButtonPressed()
     {

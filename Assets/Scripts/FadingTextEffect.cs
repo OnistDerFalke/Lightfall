@@ -12,7 +12,7 @@ public class FadingTextEffect : MonoBehaviour
     
     void Start()
     {
-        currentScale = 1f;
+        currentScale = gameObject.transform.localScale.x;
         isFadingUp = true;
     }
     

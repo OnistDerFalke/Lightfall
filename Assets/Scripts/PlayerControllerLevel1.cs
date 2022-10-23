@@ -99,11 +99,6 @@ public class PlayerControllerLevel1 : MonoBehaviour
             if (GameManager.instance.AreAllHoesTaken())
             {
                 GameManager.instance.LevelCompleted();
-                Debug.Log("Level passed!");
-            }
-            else
-            {
-                Debug.Log("You need to collect all hues to pass.");
             }
         }
         

@@ -18,15 +18,16 @@ public class GameManager : MonoBehaviour
     public GameState currentGameState;
     public Canvas inGameCanvas;
     public Canvas pauseMenuCanvas;
+    public Canvas levelCompletedCanvas;
+    public Canvas endGameCanvas;
     public Text batteriesText;
     public Text timerText;
     public Text enemiesDefeatedText;
     public Image[] lightsTab;
     public Image[] livesTab;
-    public GameObject endGameMenu;
     public LightController lightController;
 
-    private float timer = 0;
+    private float timer;
     private int lives = 3;
     private int enemiesDefeated;
     private int batteries;
@@ -44,6 +45,8 @@ public class GameManager : MonoBehaviour
 
         inGameCanvas.enabled = true;
         pauseMenuCanvas.enabled = false;
+        levelCompletedCanvas.enabled = false;
+        endGameCanvas.enabled = false;
     }
     
     void Update()
@@ -67,32 +70,34 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SetGameState(GameState newGameState)
+    public void OnNextLevelButtonClicked()
     {
+        SceneManager.LoadScene("Scenes/Level2");
+    }
+
+    private void SetGameState(GameState newGameState)
+    {
+        currentGameState = newGameState;
         pauseMenuCanvas.enabled = currentGameState == GameState.GS_PAUSEMENU;
         inGameCanvas.enabled = newGameState == GameState.GS_GAME;
-        currentGameState = newGameState;
+        levelCompletedCanvas.enabled = currentGameState == GameState.GS_LEVELCOMPLETED;
+        endGameCanvas.enabled = currentGameState == GameState.GS_GAME_OVER;
     }
 
     public void InGame()
     {
-        currentGameState = GameState.GS_GAME;
-        endGameMenu.SetActive(false);
-        pauseMenuCanvas.enabled = false;
-        inGameCanvas.enabled = true;
+        SetGameState(GameState.GS_GAME);
     }
     
     public void GameOver()
     {
-        currentGameState = GameState.GS_GAME_OVER;
-        endGameMenu.SetActive(true);
+        Debug.Log("game over");
+        SetGameState(GameState.GS_GAME_OVER);
     }
 
-    public void PauseMenu()
+    private void PauseMenu()
     {
-        currentGameState = GameState.GS_PAUSEMENU;
-        pauseMenuCanvas.enabled = true;
-        inGameCanvas.enabled = false;
+        SetGameState(GameState.GS_PAUSEMENU);
     }
 
     public void ReloadLevel()
@@ -107,7 +112,7 @@ public class GameManager : MonoBehaviour
 
     public void LevelCompleted()
     {
-        currentGameState = GameState.GS_LEVELCOMPLETED;
+        SetGameState(GameState.GS_LEVELCOMPLETED);
     }
 
     public void AddDefeatedEnemy()
