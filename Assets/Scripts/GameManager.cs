@@ -26,12 +26,14 @@ public class GameManager : MonoBehaviour
     public Image[] lightsTab;
     public Image[] livesTab;
     public LightController lightController;
+    public Text score;
 
     private float timer;
     private int lives = 3;
     private int enemiesDefeated;
     private int batteries;
     private bool hasBlueHue, hasRedHue, hasGreenHue;
+   
 
     void Awake()
     {
@@ -91,7 +93,6 @@ public class GameManager : MonoBehaviour
     
     public void GameOver()
     {
-        Debug.Log("game over");
         SetGameState(GameState.GS_GAME_OVER);
     }
 
@@ -112,6 +113,9 @@ public class GameManager : MonoBehaviour
 
     public void LevelCompleted()
     {
+        var finalScore = 100 * enemiesDefeated + 25 * lives + 10 * batteries - (int)(timer % 60);
+        if (finalScore < 0) finalScore = 0;
+        score.text = finalScore.ToString();
         SetGameState(GameState.GS_LEVELCOMPLETED);
     }
 
