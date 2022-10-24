@@ -13664,7 +13664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8ba393cffc90254694f058b53ea6db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightSpeed: 200
+  lightSpeed: 30
   batteryEnduranceTime: 30000
   flashlightLight: {fileID: 1785723121}
   spotPlayerLight: {fileID: 1442134756}
