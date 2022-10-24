@@ -43,7 +43,7 @@ public class ClassicProgressBar : MonoBehaviour {
 			Image segmentFillImage = segmentImage.transform.GetChild (0).GetComponent<Image> ();
 			segmentFillImage.color = m_FillColor;
 			m_ProgressToFill.Add (segmentFillImage);
-			segmentFillImage.transform.GetComponent<RectTransform> ().sizeDelta = new Vector2(m_SizeOfSegment, segmentFillImage.GetComponent<RectTransform>().sizeDelta.y);
+			segmentFillImage.transform.GetComponent<RectTransform> ().sizeDelta = new Vector2(m_SizeOfSegment*0.95f, segmentFillImage.GetComponent<RectTransform>().sizeDelta.y);
 		}
 	}
 

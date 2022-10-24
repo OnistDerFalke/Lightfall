@@ -13141,6 +13141,7 @@ MonoBehaviour:
   spotPlayerLight: {fileID: 1442134756}
   globalLight: {fileID: 1143541263}
   progressBar: {fileID: 1318044561}
+  playerController: {fileID: 1412290690}
   lightLimesUp: 30
   lightLimesDown: 150
 --- !u!1 &1790315422

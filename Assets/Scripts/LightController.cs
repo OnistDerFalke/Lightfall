@@ -8,7 +8,7 @@ public class LightController : MonoBehaviour
     [SerializeField] private UnityEngine.Rendering.Universal.Light2D spotPlayerLight;
     [SerializeField] private UnityEngine.Rendering.Universal.Light2D globalLight;
     [SerializeField] private ClassicProgressBar progressBar;
-
+    [SerializeField] private PlayerControllerLevel1 playerController;
     private float lastTimer = 0f;
     private float currentTime;
     private float flashlightLightStartIntensity, spotPlayerLightStartIntensity, globalLightStartIntensity;
@@ -78,7 +78,7 @@ public class LightController : MonoBehaviour
         var batteryPercent = 1f - ((currentTime - lastTimer)/batteryEnduranceTime);
         if(batteryPercent <= 0) 
         {
-            GameManager.instance.GameOver();
+            playerController.KillPlayer();
             return;
         }
         progressBar.m_FillAmount = batteryPercent;

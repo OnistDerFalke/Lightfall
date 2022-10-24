@@ -104,6 +104,7 @@ public class PlayerControllerLevel1 : MonoBehaviour
         
         if (other.CompareTag("Enemy"))
         {
+            if (other.GetComponent<EnemyController>().onceKilled) return;
             if (transform.position.y <=
                 other.transform.position.y + other.GetComponent<EnemyController>().jumpHeightToKill)
             {
@@ -167,7 +168,7 @@ public class PlayerControllerLevel1 : MonoBehaviour
         return hit.collider != null;
     }
 
-    private void KillPlayer()
+    public void KillPlayer()
     {
         if(GameManager.instance.GetLives() > 0)
         {

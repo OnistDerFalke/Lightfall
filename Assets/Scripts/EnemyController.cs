@@ -6,6 +6,7 @@ public class EnemyController : MonoBehaviour
     public float distance;
     public float moveSpeed;
     public float jumpHeightToKill;
+    public bool onceKilled;
 
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer rend;
@@ -27,6 +28,7 @@ public class EnemyController : MonoBehaviour
     public void KillEnemy()
     {
         StartCoroutine(KillAfterDeath());
+        onceKilled = true;
     }
 
     private void HandleMovement()
