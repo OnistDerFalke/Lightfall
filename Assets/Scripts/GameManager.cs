@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour
 
     public void LevelCompleted()
     {
-        var finalScore = 100 * enemiesDefeated + 25 * lives + 10 * batteries - (int)(timer % 60);
+        var finalScore = 100 * enemiesDefeated + 25 * lives + 10 * batteries - (int)(timer);
         if (finalScore < 0) finalScore = 0;
         score.text = finalScore.ToString();
         SetGameState(GameState.GS_LEVELCOMPLETED);

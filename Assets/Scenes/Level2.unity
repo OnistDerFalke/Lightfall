@@ -13748,7 +13748,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightSpeed: 200
-  batteryEnduranceTime: 30
+  batteryEnduranceTime: 60
   flashlightLight: {fileID: 1785723121}
   spotPlayerLight: {fileID: 1442134756}
   globalLight: {fileID: 1143541263}
