@@ -2,13 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class LevelPieceWithProbability
+{
+    public LevelPieceBasic levelpiece;
+    public float probability = 0.0f;
+}
+
 public class LevelGenerator : MonoBehaviour
 {
     public Transform levelStartPoint;
     public static LevelGenerator instance;
     public int piecesNumber;
     
-    public List<LevelPieceBasic> levelPrefabs = new();
+    public List<LevelPieceWithProbability> levelPrefabsWithProbability = new();
     public List<LevelPieceBasic> huesPrefabs = new();
     public List<LevelPieceBasic> endGamePrefabs = new();
     public List<LevelPieceBasic> startGamePrefabs = new();
@@ -80,7 +87,17 @@ public class LevelGenerator : MonoBehaviour
         else if (piecesCounter == piecesNumber * 3 / 4 && !IsHueTaken(huesCombination[2]))
             piece = Instantiate(huesPrefabs[huesCombination[2]], transform, false);
         else
-            piece = Instantiate(levelPrefabs[Random.Range(0, levelPrefabs.Count)], transform, false);
+        {
+            var random = Random.Range(0.0f, 1.0f);
+            var randomIndex = levelPrefabsWithProbability.Count - 1;
+            for(var i=0; i<levelPrefabsWithProbability.Count - 1; i++)
+                if (random < levelPrefabsWithProbability[i].probability)
+                {
+                    randomIndex = i;
+                    break;
+                }
+            piece = Instantiate(levelPrefabsWithProbability[randomIndex].levelpiece, transform, false);
+        }
 
         piecesCounter++;
         if (pieces.Count == 0)

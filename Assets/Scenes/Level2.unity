@@ -1525,11 +1525,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelStartPoint: {fileID: 1999367803}
   piecesNumber: 10
-  levelPrefabs:
-  - {fileID: 9002195467525465266, guid: 89ad79730bf555f46bef12e19c27c6fd, type: 3}
-  - {fileID: 9002195467525465266, guid: ea178d2516ba5864899f750ecdb5cb46, type: 3}
-  - {fileID: 9002195467525465266, guid: e03bdca57afb6e84ba09ca62aac291f6, type: 3}
-  - {fileID: 9002195467525465266, guid: dd386b34f0f5d6345ab01f5e19354fcd, type: 3}
+  levelPrefabsWithProbability:
+  - levelpiece: {fileID: 9002195467525465266, guid: 89ad79730bf555f46bef12e19c27c6fd, type: 3}
+    probability: 0.5
+  - levelpiece: {fileID: 9002195467525465266, guid: ea178d2516ba5864899f750ecdb5cb46, type: 3}
+    probability: 0.7
+  - levelpiece: {fileID: 9002195467525465266, guid: e03bdca57afb6e84ba09ca62aac291f6, type: 3}
+    probability: 0.85
+  - levelpiece: {fileID: 9002195467525465266, guid: dd386b34f0f5d6345ab01f5e19354fcd, type: 3}
+    probability: 1
   huesPrefabs:
   - {fileID: 9002195467525465266, guid: 81d95aa22985f734dbb8ee752ba7ff1b, type: 3}
   - {fileID: 9002195467525465266, guid: 0fb9f54bf631e4140b680751c0c6c2d6, type: 3}
@@ -7253,7 +7257,7 @@ MonoBehaviour:
   jumpForce: 8
   moveSpeedStep: 0.05
   jumpForceStep: 0.1
-  moveSpeedRange: {x: 1, y: 8}
+  moveSpeedRange: {x: 1, y: 5}
   jumpForceRange: {x: 8, y: 10}
   groundLayer:
     serializedVersion: 2
