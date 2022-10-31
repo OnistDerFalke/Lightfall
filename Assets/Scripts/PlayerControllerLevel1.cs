@@ -173,6 +173,8 @@ public class PlayerControllerLevel1 : MonoBehaviour
         if(GameManager.instance.GetLives() > 0)
         {
             gameObject.transform.position = startPos;
+            if(LevelGenerator.instance != null)
+                LevelGenerator.instance.RestartGenerator();
             rend.flipX = true;
             GameManager.instance.ResetLightPower();
             GameManager.instance.RemoveLive();

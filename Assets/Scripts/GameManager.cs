@@ -204,6 +204,7 @@ public class GameManager : MonoBehaviour
 
         for (var i = 0; i < lives; i++)
         {
+            if (i > 4) break;
             livesTab[i].enabled = true;
         }
     }

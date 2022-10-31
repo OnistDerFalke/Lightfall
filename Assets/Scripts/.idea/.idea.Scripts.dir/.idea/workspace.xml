@@ -9,7 +9,12 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Camera2DFollow.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GameManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/LevelGenerator.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/PlayerControllerLevel1.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2FneWOZOieJgUSPtTepG15hbQnQ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -36,6 +41,7 @@
       <workItem from="1665132317994" duration="310000" />
       <workItem from="1665158281965" duration="12000" />
       <workItem from="1665160008902" duration="17000" />
+      <workItem from="1667168798727" duration="418000" />
     </task>
     <servers />
   </component>

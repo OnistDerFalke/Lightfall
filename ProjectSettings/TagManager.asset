@@ -15,6 +15,7 @@ TagManager:
   - RedHue
   - GreenHue
   - BlueHue
+  - FallLevel
   layers:
   - Default
   - TransparentFX
