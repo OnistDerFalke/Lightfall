@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     private int lives = 3;
     private int enemiesDefeated;
     private int batteries;
-    private bool hasBlueHue, hasRedHue, hasGreenHue;
+    public bool hasBlueHue, hasRedHue, hasGreenHue;
    
 
     void Awake()

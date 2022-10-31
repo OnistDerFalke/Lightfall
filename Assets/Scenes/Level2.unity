@@ -1524,11 +1524,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelStartPoint: {fileID: 1999367803}
+  piecesNumber: 10
   levelPrefabs:
   - {fileID: 9002195467525465266, guid: 89ad79730bf555f46bef12e19c27c6fd, type: 3}
   - {fileID: 9002195467525465266, guid: ea178d2516ba5864899f750ecdb5cb46, type: 3}
   - {fileID: 9002195467525465266, guid: e03bdca57afb6e84ba09ca62aac291f6, type: 3}
   - {fileID: 9002195467525465266, guid: dd386b34f0f5d6345ab01f5e19354fcd, type: 3}
+  huesPrefabs:
+  - {fileID: 9002195467525465266, guid: 81d95aa22985f734dbb8ee752ba7ff1b, type: 3}
+  - {fileID: 9002195467525465266, guid: 0fb9f54bf631e4140b680751c0c6c2d6, type: 3}
+  - {fileID: 9002195467525465266, guid: fb4cc0e0f60947b47b8beba11a013032, type: 3}
+  endGamePrefabs:
+  - {fileID: 9002195467525465266, guid: 6d383e0332b88fa4db932f6c110f73d7, type: 3}
   pieces: []
 --- !u!4 &179067091
 Transform:
@@ -13794,6 +13801,9 @@ MonoBehaviour:
   - {fileID: 451744675}
   lightController: {fileID: 1785723122}
   score: {fileID: 2119033168}
+  hasBlueHue: 0
+  hasRedHue: 0
+  hasGreenHue: 0
 --- !u!4 &1780252029
 Transform:
   m_ObjectHideFlags: 0

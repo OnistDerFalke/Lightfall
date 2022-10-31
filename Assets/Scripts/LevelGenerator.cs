@@ -6,9 +6,16 @@ public class LevelGenerator : MonoBehaviour
 {
     public Transform levelStartPoint;
     public static LevelGenerator instance;
-
+    public int piecesNumber;
+    
     public List<LevelPieceBasic> levelPrefabs = new();
+    public List<LevelPieceBasic> huesPrefabs = new();
+    public List<LevelPieceBasic> endGamePrefabs = new();
     public List<LevelPieceBasic> pieces = new();
+
+    private int piecesCounter = 0;
+    int[] huesCombination = { 0, 1, 2 };
+    
     void Awake()
     {
         instance = this;
@@ -17,16 +24,38 @@ public class LevelGenerator : MonoBehaviour
     void Start()
     {
         pieces = new List<LevelPieceBasic>();
+        ResetHuesCombination();
         AddPiece();
         AddPiece();
     }
 
+    private void ResetHuesCombination()
+    {
+        for (var i = huesCombination.Length - 1; i > 0; i--)
+        {
+            var ri = Random.Range(0, i + 1);
+            (huesCombination[i], huesCombination[ri]) = (huesCombination[ri], huesCombination[i]);
+        }
+    }
+
+    private bool IsHueTaken(int num)
+    {
+        return num switch
+        {
+            0 => GameManager.instance.hasRedHue,
+            1 => GameManager.instance.hasGreenHue,
+            2 => GameManager.instance.hasBlueHue,
+            _ => false
+        };
+    }
+
     public void RestartGenerator()
     {
-
+        piecesCounter = 0;
+        ResetHuesCombination();
         while (pieces.Count > 0)
         {
-            LevelPieceBasic oldestPiece = pieces[0];
+            var oldestPiece = pieces[0];
             pieces.RemoveAt(0);
             Destroy(oldestPiece.gameObject);
         }
@@ -36,8 +65,21 @@ public class LevelGenerator : MonoBehaviour
 
     public void AddPiece()
     {
-        var randomIndex = Random.Range(0, levelPrefabs.Count);
-        var piece = Instantiate(levelPrefabs[randomIndex], transform, false);
+        LevelPieceBasic piece;
+        
+        if (piecesCounter == piecesNumber - 1)
+            piece = Instantiate(endGamePrefabs[Random.Range(0, endGamePrefabs.Count)], transform, false);
+        else if (piecesCounter >= piecesNumber) return;
+        else if (piecesCounter == piecesNumber / 4 && !IsHueTaken(huesCombination[0]))
+            piece = Instantiate(huesPrefabs[huesCombination[0]], transform, false);
+        else if(piecesCounter == piecesNumber / 2 && !IsHueTaken(huesCombination[1]))
+            piece = Instantiate(huesPrefabs[huesCombination[1]], transform, false);
+        else if (piecesCounter == piecesNumber * 3 / 4 && !IsHueTaken(huesCombination[2]))
+            piece = Instantiate(huesPrefabs[huesCombination[2]], transform, false);
+        else
+            piece = Instantiate(levelPrefabs[Random.Range(0, levelPrefabs.Count)], transform, false);
+
+        piecesCounter++;
         if (pieces.Count == 0)
             piece.transform.position = new Vector2(
                 levelStartPoint.position.x - piece.startPoint.localPosition.x,
@@ -50,8 +92,8 @@ public class LevelGenerator : MonoBehaviour
 
     public void RemoveOldestPiece()
     {
-        if (pieces.Count < 8) return;
-        LevelPieceBasic oldestPiece = pieces[0];
+        if (pieces.Count < 3) return;
+        var oldestPiece = pieces[0];
         pieces.RemoveAt(0);
         Destroy(oldestPiece.gameObject);
     }
