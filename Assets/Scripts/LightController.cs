@@ -9,6 +9,7 @@ public class LightController : MonoBehaviour
     [SerializeField] private UnityEngine.Rendering.Universal.Light2D globalLight;
     [SerializeField] private ClassicProgressBar progressBar;
     [SerializeField] private PlayerControllerLevel1 playerController;
+    public bool isOneSide;
     private float lastTimer = 0f;
     private float currentTime;
     private float flashlightLightStartIntensity, spotPlayerLightStartIntensity, globalLightStartIntensity;
@@ -35,12 +36,15 @@ public class LightController : MonoBehaviour
     private void SetLightRotation()
     {
         var rot = gameObject.transform.localEulerAngles;
-        
-        if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && rot.z <= 180)
-            rot.z = 360-rot.z;
-        if((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && rot.z >= 180)
-            rot.z = 360-rot.z;
-        
+
+        if (!isOneSide)
+        {
+            if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && rot.z <= 180)
+                rot.z = 360 - rot.z;
+            if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && rot.z >= 180)
+                rot.z = 360 - rot.z;
+        }
+
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
             if (rot.z >= lightLimesUp + 180 && rot.z <= lightLimesDown + 180)

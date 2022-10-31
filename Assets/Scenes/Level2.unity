@@ -1536,6 +1536,8 @@ MonoBehaviour:
   - {fileID: 9002195467525465266, guid: fb4cc0e0f60947b47b8beba11a013032, type: 3}
   endGamePrefabs:
   - {fileID: 9002195467525465266, guid: 6d383e0332b88fa4db932f6c110f73d7, type: 3}
+  startGamePrefabs:
+  - {fileID: 9056479421985427491, guid: 012948ea38e2f3a48836a5e269f9ff59, type: 3}
   pieces: []
 --- !u!4 &179067091
 Transform:
@@ -7160,8 +7162,7 @@ GameObject:
   - component: {fileID: 1412290687}
   - component: {fileID: 1412290688}
   - component: {fileID: 1412290689}
-  - component: {fileID: 1412290690}
-  - component: {fileID: 1412290691}
+  - component: {fileID: 1412290692}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -7177,7 +7178,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412290686}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 80.9, y: 6.21, z: 0}
+  m_LocalPosition: {x: 80.7, y: 6.21, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7234,7 +7235,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.9593854, y: 1.4219079}
   m_EdgeRadius: 0
---- !u!114 &1412290690
+--- !u!114 &1412290692
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7243,29 +7244,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1412290686}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13e55ab3d3e635744a581c6fa173e2ea, type: 3}
+  m_Script: {fileID: 11500000, guid: 40e3e571803771442be52f8eb8fad0cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1274569300}
   rend: {fileID: 1274569299}
-  moveSpeed: 7
+  moveSpeed: 1
   jumpForce: 8
+  moveSpeedStep: 0.05
+  jumpForceStep: 0.1
+  moveSpeedRange: {x: 1, y: 8}
+  jumpForceRange: {x: 8, y: 10}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
---- !u!114 &1412290691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1412290686}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6aae1c50d2c2a341bbdf90def216c0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 1534230157}
 --- !u!1 &1442134754
 GameObject:
   m_ObjectHideFlags: 0
@@ -13953,7 +13945,8 @@ MonoBehaviour:
   spotPlayerLight: {fileID: 1442134756}
   globalLight: {fileID: 1143541263}
   progressBar: {fileID: 1318044561}
-  playerController: {fileID: 1412290690}
+  playerController: {fileID: 0}
+  isOneSide: 1
   lightLimesUp: 30
   lightLimesDown: 150
 --- !u!1 &1790315422

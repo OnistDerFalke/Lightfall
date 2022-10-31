@@ -16,7 +16,7 @@ public class EnemyController : MonoBehaviour
         
     void Awake()
     {
-        rootX = transform.position.x;
+        rootX = transform.localPosition.x;
     }
 
     void Update()
@@ -33,20 +33,20 @@ public class EnemyController : MonoBehaviour
 
     private void HandleMovement()
     {
-        if(transform.position.x > rootX+distance) 
+        if(transform.localPosition.x > rootX+distance) 
         {
             if(dir == 1) 
                 distance *= -1;
             dir = -1;
         }
-        else if(transform.position.x < rootX+distance) 
+        else if(transform.localPosition.x < rootX+distance) 
         {
             if(dir == -1) 
                 distance *= -1;
             dir = 1;
         }
     
-        transform.Translate(dir * moveSpeed * Time.deltaTime, 0, 0, Space.World);
+        transform.Translate(dir * moveSpeed * Time.deltaTime, 0, 0, Space.Self);
     }
 
     private void HandleFlip()

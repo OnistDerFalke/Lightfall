@@ -11,6 +11,7 @@ public class LevelGenerator : MonoBehaviour
     public List<LevelPieceBasic> levelPrefabs = new();
     public List<LevelPieceBasic> huesPrefabs = new();
     public List<LevelPieceBasic> endGamePrefabs = new();
+    public List<LevelPieceBasic> startGamePrefabs = new();
     public List<LevelPieceBasic> pieces = new();
 
     private int piecesCounter = 0;
@@ -69,6 +70,8 @@ public class LevelGenerator : MonoBehaviour
         
         if (piecesCounter == piecesNumber - 1)
             piece = Instantiate(endGamePrefabs[Random.Range(0, endGamePrefabs.Count)], transform, false);
+        else if(piecesCounter == 0)
+            piece = Instantiate(startGamePrefabs[Random.Range(0, startGamePrefabs.Count)], transform, false);
         else if (piecesCounter >= piecesNumber) return;
         else if (piecesCounter == piecesNumber / 4 && !IsHueTaken(huesCombination[0]))
             piece = Instantiate(huesPrefabs[huesCombination[0]], transform, false);
